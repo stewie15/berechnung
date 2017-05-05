@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final double input = Double.parseDouble(((EditText)findViewById(R.id.editText)).getText().toString());
                 Calculation calculation = new Calculation();
-                double dole = calculation.calculate(input);
-                ((TextView)findViewById(R.id.textView)).setText("Ihr tägliches Arbeitslosengeld beträgt: " + dole);
+                double ag = calculation.calculate(input);
+                ((TextView) findViewById(R.id.textView)).setText("Result" + ag);
             }
         });
     }
