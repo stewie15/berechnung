@@ -11,28 +11,40 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="numberDecimal"
-        android:layout_above="@+id/button"
-        android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button"
-        android:layout_marginBottom="26dp" />
+        android:layout_marginBottom="29dp"
+        android:layout_above="@+id/spinner"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/button"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="Berechnen"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="150dp" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
         android:text="TextView"
-        android:layout_below="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="45dp" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="10dp"
+        android:layout_height="35dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:entries="array/Kinder"
+        android:spinnerMode="dropdown"
+        android:layout_above="@+id/button"
         android:layout_alignLeft="@+id/button"
         android:layout_alignStart="@+id/button"
-        android:layout_marginLeft="56dp"
-        android:layout_marginStart="56dp" />
+        android:layout_alignRight="@+id/button"
+        android:layout_alignEnd="@+id/button" />
 
 </RelativeLayout>
