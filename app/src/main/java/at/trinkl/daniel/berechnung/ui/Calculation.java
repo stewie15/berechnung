@@ -17,6 +17,7 @@ public class Calculation {
     private final int taxClass3 = 12180;
     private final double days = 30.43333;
     private final double azr = 29.66;
+    private final byte fa = 1;
 
 
     public double calculate(double input) {
@@ -81,6 +82,9 @@ public class Calculation {
             double ag66 = dailynet * 0.60;
             ag66 = Math.round(100.0 * ag66) / 100.0;
             ag = ag66;
+        }
+        if (ag < azr && fa > 0) {
+
         }
 
         return ag;
