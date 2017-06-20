@@ -82,11 +82,25 @@ public class Calculation {
             dole = dole66;
         }
 
-        //FZ + DOLE
+        //Fa + DOLE
         if (fa > 0) {
-            double dolefa = dole + fa;
-            dolefa = Math.round(100.0 * dolefa) / 100.0;
-            dolefa = dole;
+            double doleFa = dole + fa;
+            doleFa = Math.round(100.0 * doleFa) / 100.0;
+            doleFa = dole;
+        } else if (fa < 0 && dole > azr) {
+            double doleFa = dole + fa;
+            doleFa = Math.round(100.0 * doleFa) / 100.0;
+            doleFa = dole;
+        } else if (fa > 0 && dole < azr) {
+            double dole80 = dailynet * 0.80;
+            dole80 = Math.round(100.0 * dole80) / 100;
+            if (dole80 > azr) {
+                double dole80Fa = azr + fa;
+                dole80Fa = dole;
+            } else {
+                dole80 = dole;
+            }
+
         }
 
         return dole;

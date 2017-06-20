@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import at.trinkl.daniel.berechnung.R;
 
+
 public class MainActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final double input = Double.parseDouble(((EditText)findViewById(R.id.editText)).getText().toString());
-                final double fa = Double.parseDouble(((Spinner) findViewById(R.id.spinner)).getAdapter().toString());
+                final double fa = Double.parseDouble(((Spinner) findViewById(R.id.spinner)).getSelectedItem().toString());
                 Calculation calculation = new Calculation();
                 double dole = calculation.calculate(input, fa);
                 ((TextView) findViewById(R.id.textViewOutput)).setText("Ihr tägliches Arbeitslosengeld beträgt: " + dole);
