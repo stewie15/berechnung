@@ -17,32 +17,30 @@ public class Calculation {
     private final int taxClass3 = 12180;
     private final double days = 30.43333;
     private final double azr = 29.66;
-    private final byte fa = 1;
 
-
-    public double calculate(double input) {
+    public double calculate(double input, double fa) {
 
         //Sonderzahlungen Brutto
         double szbyear = (input * 14) / 12;
-        szbyear = Math.round(100.0 * szbyear) / 100.0;//monthly salary times 14; division 12
+        szbyear = Math.round(1000.0 * szbyear) / 1000.0;//monthly salary times 14; division 12
         double szb = (szbyear - input) * 12;
-        szb = Math.round(100.0 * szb) / 100.0;
+        szb = Math.round(1000.0 * szb) / 1000.0;
         //monthly salary with SZ - monthly salary * 12 = yearly SZ
 
         //monthly net salary without sz
         double netsalary = input * (18.12 / 100);
-        netsalary = Math.round(100.0 * netsalary) / 100.0;
+        netsalary = Math.round(1000.0 * netsalary) / 1000.0;
 
         //salary taxes
         double salaryYear = (input - netsalary) * 12;
-        salaryYear = Math.round(100.0 * salaryYear) / 100.0;
+        salaryYear = Math.round(1000.0 * salaryYear) / 1000.0;
 
         //yearly income for tax
         double yearly = salaryYear - wkp - sond;
-        yearly = Math.round(100.0 * yearly) / 100.0;
+        yearly = Math.round(1000.0 * yearly) / 1000.0;
 
         double tax = 0;
-        tax = Math.round(100.0 * tax) / 100.0;
+        tax = Math.round(1000.0 * tax) / 1000.0;
 
         if (isBetween(yearly, 0, TAX_FREE_AMOUNT)) {
             tax = 0;
@@ -55,39 +53,57 @@ public class Calculation {
         }
 
         double yearlyNet = yearly - tax + wkp + sond;
-        yearlyNet = Math.round(100.0 * yearlyNet) / 100.0;
+        yearlyNet = Math.round(1000.0 * yearlyNet) / 1000.0;
         double monthlyNet = yearlyNet / 12;
-        monthlyNet = Math.round(100.0 * monthlyNet) / 100.0;
+        monthlyNet = Math.round(1000.0 * monthlyNet) / 1000.0;
 
 
         //calculate tax of sz
         double socialsec = szb * (17.12 / 100); //calculate social security of SZ
-        socialsec = Math.round(100.0 * socialsec) / 100.0;
+        socialsec = Math.round(1000.0 * socialsec) / 1000.0;
         double szn = szb - socialsec; //yearly SZ - social security
-        szn = Math.round(100.0 * szn) / 100.0;
+        szn = Math.round(1000.0 * szn) / 1000.0;
 
         double sztax = (((szn - taxFree) * 6) / 100); //yearly tax for SZ
-        sztax = Math.round(100.0 * sztax) / 100.0;
+        sztax = Math.round(1000.0 * sztax) / 1000.0;
         double szmonthly = (szb - socialsec - sztax) / 12; // monthly SZ = szb (monthly SZ brutto) - social security - tax
-        szmonthly = Math.round(100.0 * szmonthly) / 100.0;
+        szmonthly = Math.round(1000.0 * szmonthly) / 1000.0;
 
         double dailynet = (monthlyNet + szmonthly) / days; // daylinet = (monthly net salary + monthly net SZ) / (days of the year (always 365) / 12)
-        dailynet = Math.round(100.0 * dailynet) / 100.0;
+        dailynet = Math.round(1000.0 * dailynet) / 1000.0;
 
-        double ag = dailynet * 0.55; //Daily unemployment benefit
-        ag = Math.round(100.0 * ag) / 100.0;
+        double dole = dailynet * 0.55; //Daily unemployment benefit
+        dole = Math.round(100.0 * dole) / 100.0;
 
 
-        if (ag < azr) {
-            double ag66 = dailynet * 0.60;
-            ag66 = Math.round(100.0 * ag66) / 100.0;
-            ag = ag66;
-        }
-        if (ag < azr && fa > 0) {
-
+        if (dole < azr) {
+            double dole66 = dailynet * 0.60;
+            dole66 = Math.round(100.0 * dole66) / 100.0;
+            dole = dole66;
         }
 
-        return ag;
+        //Fa + DOLE
+        if (fa > 0) {
+            double doleFa = dole + fa;
+            doleFa = Math.round(100.0 * doleFa) / 100.0;
+            doleFa = dole;
+        } else if (fa < 0 && dole > azr) {
+            double doleFa = dole + fa;
+            doleFa = Math.round(100.0 * doleFa) / 100.0;
+            doleFa = dole;
+        } else if (fa > 0 && dole < azr) {
+            double dole80 = dailynet * 0.80;
+            dole80 = Math.round(100.0 * dole80) / 100;
+            if (dole80 > azr) {
+                double dole80Fa = azr + fa;
+                dole80Fa = dole;
+            } else {
+                dole80 = dole;
+            }
+
+        }
+
+        return dole;
     }
 
     private boolean isBetween(double yearly, double min, double max) {
@@ -95,4 +111,3 @@ public class Calculation {
     }
 
 }
-
