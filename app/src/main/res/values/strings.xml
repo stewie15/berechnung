@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Berechnung</string>
+    <string name="daily_amount">Ihr tägliches Arbeitslosengeld beträgt: %i</string>
+
     <string-array name="kinder_array">
         <item>0</item>
         <item>1</item>
